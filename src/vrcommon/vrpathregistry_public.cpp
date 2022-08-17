@@ -143,6 +143,8 @@ std::string CVRPathRegistry_Public::GetVRPathRegistryFilename()
 
 #if defined( _WIN32 )
 	sPath = Path_Join( sPath, "openvrpaths.vrpath" );
+#elif defined( LINUXARM64 )
+	sPath = "/data/work/openvrpaths.vrpath";
 #elif defined ( POSIX ) 
 	sPath = Path_Join( sPath, "openvrpaths.vrpath" );
 #else
@@ -481,3 +483,10 @@ uint32_t CVRPathRegistry_Public::InitSteamAppId()
 	return nSteamAppId;
 }
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+bool CVRPathRegistry_Public::IsChildOfVRServer()
+{
+	std::string app_key = GetEnvironmentVariable( "STEAMVR_APPKEY" );
+	return app_key == "openvr.component.vrserver";
+}
